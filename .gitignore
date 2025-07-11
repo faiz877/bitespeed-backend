@@ -1,0 +1,16 @@
+# Node.js dependencies
+node_modules/
+
+# Compiled TypeScript output
+dist/
+
+# Environment variables file (sensitive data)
+.env
+
+# Editor/OS specific files (optional but good practice)
+.DS_Store # macOS specific
+*.log     # Log files
+npm-debug.log*
+yarn-debug.log*
+.idea/    # IntelliJ/WebStorm project files
+.vscode/  # VSCode project files (if you don't want to share workspace settings)

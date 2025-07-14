@@ -96,25 +96,24 @@ export async function identify(
         }
       }
 
-      // Create new secondary if input offers a genuinely new combination not already associated.
-      const isInputAlreadyLinked = existingContacts.some(
-        (c) =>
-          c.id === ultimatePrimary.id ||
-          (c.linkedId === ultimatePrimary.id &&
-            ((email && c.email === email) ||
-              (phoneNumber && c.phoneNumber === phoneNumber)))
+      // Check if a new secondary contact needs to be created
+      const currentReconciledGroup = await db.queryAllLinkedContacts(
+        trxClient,
+        ultimatePrimary.id
       );
 
-      const isInputDistinctFromPrimary = !(
-        (email && ultimatePrimary.email === email) ||
-        (phoneNumber && ultimatePrimary.phoneNumber === phoneNumber)
-      );
+      let exactMatchFoundInGroup = false;
+      for (const c of currentReconciledGroup) {
+        const emailMatches = email === c.email;
+        const phoneMatches = phoneNumber === c.phoneNumber;
 
-      if (
-        !isInputAlreadyLinked &&
-        isInputDistinctFromPrimary &&
-        (email || phoneNumber)
-      ) {
+        if (emailMatches && phoneMatches) {
+          exactMatchFoundInGroup = true;
+          break;
+        }
+      }
+
+      if (!exactMatchFoundInGroup && (email || phoneNumber)) {
         await db.createContact(trxClient, {
           email: email || null,
           phoneNumber: phoneNumber || null,
@@ -122,9 +121,13 @@ export async function identify(
           linkedId: ultimatePrimary.id,
         });
         console.log(
-          `Created new secondary for input: email=${email || ""}, phone=${
-            phoneNumber || ""
-          }`
+          `Debug: Created new secondary for input: email=${
+            email || "null"
+          }, phone=${phoneNumber || "null"}`
+        );
+      } else {
+        console.log(
+          `Debug: Input combination already exists in group. No new secondary created.`
         );
       }
     }

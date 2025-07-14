@@ -12,13 +12,13 @@ CREATE TABLE IF NOT EXISTS Contact (
     "phoneNumber" VARCHAR(20),
     email VARCHAR(255),
     "linkedId" INT REFERENCES Contact(id),
-    "linkPrecedence" linkprecedence_enum NOT NULL
-    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
-    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+    "linkPrecedence" linkprecedence_enum NOT NULL,
+    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     "deletedAt" TIMESTAMP WITH TIME ZONE NULL
 );
 
--- Add indexes for performance.
+-- Add indexes for lookup.
 CREATE INDEX IF NOT EXISTS idx_contact_email ON Contact (email);
 CREATE INDEX IF NOT EXISTS idx_contact_phonenumber ON Contact ("phoneNumber");
 CREATE INDEX IF NOT EXISTS idx_contact_linkedid ON Contact ("linkedId");

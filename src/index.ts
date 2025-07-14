@@ -1,5 +1,3 @@
-// src/index.ts
-
 import { db } from "./db";
 import { IdentifyRequest, IdentifyResponse, Contact } from "./types";
 import { PoolClient } from "pg";

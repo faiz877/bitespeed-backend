@@ -7,19 +7,18 @@ BEGIN
 END
 $$;
 
--- Creating the 'Contact' table.
 CREATE TABLE IF NOT EXISTS Contact (
-    id SERIAL PRIMARY KEY, 
-    phoneNumber VARCHAR(20), 
-    email VARCHAR(255),      
-    linkedId INT REFERENCES Contact(id), -- Foreign key: links to another 'Contact' id
-    linkPrecedence linkprecedence_enum NOT NULL, -- Uses the ENUM type defined above
-    createdAt TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
-    updatedAt TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
-    deletedAt TIMESTAMP WITH TIME ZONE NULL
+    id SERIAL PRIMARY KEY,
+    "phoneNumber" VARCHAR(20),
+    email VARCHAR(255),
+    "linkedId" INT REFERENCES Contact(id),
+    "linkPrecedence" linkprecedence_enum NOT NULL
+    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP, 
+    "deletedAt" TIMESTAMP WITH TIME ZONE NULL
 );
 
 -- Add indexes for performance.
 CREATE INDEX IF NOT EXISTS idx_contact_email ON Contact (email);
-CREATE INDEX IF NOT EXISTS idx_contact_phonenumber ON Contact (phoneNumber);
-CREATE INDEX IF NOT EXISTS idx_contact_linkedid ON Contact (linkedId);
+CREATE INDEX IF NOT EXISTS idx_contact_phonenumber ON Contact ("phoneNumber");
+CREATE INDEX IF NOT EXISTS idx_contact_linkedid ON Contact ("linkedId");

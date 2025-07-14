@@ -104,8 +104,12 @@ export async function identify(
 
       let exactMatchFoundInGroup = false;
       for (const c of currentReconciledGroup) {
-        const emailMatches = email === c.email;
-        const phoneMatches = phoneNumber === c.phoneNumber;
+        const emailMatches =
+          email === undefined || email === null || email === c.email;
+        const phoneMatches =
+          phoneNumber === undefined ||
+          phoneNumber === null ||
+          phoneNumber === c.phoneNumber;
 
         if (emailMatches && phoneMatches) {
           exactMatchFoundInGroup = true;
@@ -169,17 +173,15 @@ async function runLocalTests() {
   console.log("\n--- Starting Local Tests ---");
 
   // Uncomment to clear DB for consistent test runs
-  /*
   try {
     await db.transaction(async (trx) => {
-      await trx.query('DELETE FROM Contact;');
-      await trx.query('ALTER SEQUENCE contact_id_seq RESTART WITH 1;');
+      await trx.query("DELETE FROM Contact;");
+      await trx.query("ALTER SEQUENCE contact_id_seq RESTART WITH 1;");
       console.log("DB cleared for testing.");
     });
   } catch (err) {
     console.error("Error clearing DB:", err);
   }
-  */
 
   const logResult = (label: string, result: IdentifyResponse) => {
     console.log(`\n--- ${label} ---`);

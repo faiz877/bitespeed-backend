@@ -1,6 +1,7 @@
 # Identity Reconciliation Service
 
-This is a backend service designed to handle identity reconciliation for customer contacts (emails and phone numbers). It identifies, links, and merges contact information to ensure each customer has a single, consistent primary contact record.
+This is a backend service designed to handle identity reconciliation for customer contacts (emails and phone numbers). 
+It identifies, links, and merges contact information to ensure each customer has a single, consistent primary contact record.
 
 The service is built with **Node.js** and **TypeScript**, uses **PostgreSQL** as its database, and is deployed as a **serverless API** on **AWS Lambda** via **API Gateway**.
 
